@@ -1,49 +1,42 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional, List
 
-class UserBase(BaseModel):
+class UserCreate(BaseModel):
     username: str
     email: EmailStr
-
-class UserCreate(UserBase):
     password: str
 
-class User(UserBase):
+class UserResponse(BaseModel):
     id: int
-    is_doctor: bool
-    is_active: bool
-    created_at: datetime
+    username: str
+    email: EmailStr
+    role: str
 
     class Config:
         orm_mode = True
 
-class TopicBase(BaseModel):
+class ForumPostCreate(BaseModel):
     title: str
-    description: Optional[str] = None
-    is_anonymous: bool = True
-
-class TopicCreate(TopicBase):
-    pass
-
-class Topic(TopicBase):
-    id: int
-    user_id: int
-    created_at: datetime
-
-    class Config:
-        orm_mode = True
-
-class CommentBase(BaseModel):
     content: str
 
-class CommentCreate(CommentBase):
-    topic_id: int
-
-class Comment(CommentBase):
+class ForumPostResponse(BaseModel):
     id: int
-    user_id: int
-    topic_id: int
+    title: str
+    content: str
+    author_id: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class ForumCommentCreate(BaseModel):
+    content: str
+
+class ForumCommentResponse(BaseModel):
+    id: int
+    content: str
+    post_id: int
+    author_id: int
     created_at: datetime
 
     class Config:

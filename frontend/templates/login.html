@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Авторизация</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-  <header>
-    <h1>Войти на форум</h1>
-  </header>
-  <main>
-    <form id="loginForm">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+    <h1>Вход</h1>
 
-      <label for="password">Пароль</label>
-      <input type="password" id="password" name="password" required>
+    <form id="login-form">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
 
-      <button type="submit">Войти</button>
+        <label for="password">Пароль</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">Войти</button>
     </form>
-  </main>
-  <script src="/static/js/app.js"></script>
+
+    <script src="/static/js/scripts.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', login);
+    </script>
 </body>
 </html>

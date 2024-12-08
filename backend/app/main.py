@@ -1,27 +1,16 @@
-# backend/app/main.py
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
-from . import models, schemas, crud
-from database.database import Base, SessionLocal, engine
+from fastapi import FastAPI
+from app.routes import router
+from backend.app.database import engine
+from app.models import Base  # Импорты базы
 
-# Создаем таблицы базы данных
-models.Base.metadata.create_all(bind=engine)
+app = FastAPI(title="Medical Forum Backend")
 
-app = FastAPI()
+# Создаем таблицы при запуске приложения
+Base.metadata.create_all(bind=engine)
 
-# Зависимость для получения базы данных
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Подключаем маршруты
+app.include_router(router)
 
-@app.post("/topics/", response_model=schemas.Topic)
-def create_topic(topic: schemas.TopicCreate, db: Session = Depends(get_db)):
-    return crud.create_topic(db=db, topic=topic)
-
-@app.get("/topics/", response_model=list[schemas.Topic])
-def read_topics(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    topics = crud.get_topics(db, skip=skip, limit=limit)
-    return topics
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Medical Forum Backend"}

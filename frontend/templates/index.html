@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Medical Forum</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Welcome to the Medical Forum</h1>
-    <a href="./register.html">Register</a> | <a href="/login.html">Login</a>
+    <h1>Добро пожаловать на Медицинский Форум</h1>
+
+    <a href="login.html">Войти</a> | 
+    <a href="register.html">Регистрация</a>
+
+    <h2>Список тем форума</h2>
+    <div id="forum-topics"></div>
+
+    <script src="/static/js/scripts.js"></script>
+    <script>
+        // Загрузка тем при загрузке страницы
+        window.onload = function() {
+            loadTopics();
+        };
+    </script>
 </body>
 </html>
