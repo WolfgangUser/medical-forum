@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from app.models import User
 from app.security import hash_password, verify_password, create_access_token
-from backend.app.database import get_db  # Импортируем get_db из внешнего файла
+from app.database import get_db  # Импортируем get_db из внешнего файла
 
 auth_router = APIRouter()
 
