@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Форум</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Форум</h1>
+  </header>
+  <main>
+    <h2>Создать тему</h2>
+    <form id="createTopicForm">
+      <input type="text" name="title" placeholder="Заголовок" required>
+      <textarea name="content" placeholder="Введите текст"></textarea>
+      <button type="submit">Создать</button>
+    </form>
+
+    <h2>Темы</h2>
+    <div id="topics">
+      <!-- Темы подгружаются через JS -->
+    </div>
+  </main>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
