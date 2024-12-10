@@ -1,14 +1,15 @@
 FROM python:3.9-slim
 
-WORKDIR /app
+WORKDIR .
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . ./app
-# ENV PYTHONUNBUFFERED=1
-# ENV PYTHONPATH=/app:/database
+# Копируем все файлы внутрь контейнера
+COPY . .
 
-EXPOSE 8001
+# Открываем порт для сервиса
+#EXPOSE 8001
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8001", "--reload"]
+# Запуск через run_app.py
+CMD python app.py
