@@ -18,7 +18,6 @@ class User(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True, nullable=False)
-    email = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)  # Пароль хранится в открытом виде
     role = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
@@ -26,7 +25,6 @@ class User(Base):
 # Модель для регистрации (Pydantic)
 class UserCreate(BaseModel):
     username: str
-    email: str
     password: str
     role: str
 
@@ -48,14 +46,14 @@ async def root():
 # Роут для регистрации нового пользователя
 @app.post('/register/')
 async def register_user(user: UserCreate, db: Session = Depends(get_db)):
-    # Проверяем, существует ли уже пользователь с username или email
-    existing_user = db.query(User).filter((User.username == user.username) | (User.email == user.email)).first()
+    # Проверяем, существует ли уже пользователь с username
+    existing_user = db.query(User).filter((User.username == user.username)).first()
     
     if existing_user:
-        raise HTTPException(status_code=400, detail="Username or email already registered")
+        raise HTTPException(status_code=400, detail="Username already registered")
     
     # Сохраняем нового пользователя в базе данных (пароль сохраняется в открытом виде)
-    new_user = User(username=user.username, email=user.email, password=user.password, role=user.role)
+    new_user = User(username=user.username, password=user.password, role=user.role)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

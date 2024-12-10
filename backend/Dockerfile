@@ -1,12 +1,15 @@
-FROM python:3.11-slim
+FROM python:3.9-slim
 
-WORKDIR /app
+WORKDIR .
 
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app
+# Копируем все файлы внутрь контейнера
+COPY . .
 
-EXPOSE 8000
+# Открываем порт для сервиса
+#EXPOSE 8001
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+# Запуск через run_app.py
+CMD python app.py
