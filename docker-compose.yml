@@ -17,9 +17,10 @@ services:
       - forum_network
 
   backend:
-    build:
-      context: ./backend
+    build: ./backend
     container_name: backend
+    ports:
+      - "8000:8000"
     environment:
       - DATABASE_URL=postgresql://user:password@database:5432/medical_forum
     depends_on:
@@ -28,8 +29,7 @@ services:
       - forum_network
 
   auth-service:
-    build:
-      context: ./auth-service
+    build: ./auth-service
     container_name: auth-service
     ports:
       - "8001:8001"
@@ -41,8 +41,7 @@ services:
       - forum_network
 
   frontend:
-    build:
-      context: ./frontend
+    build: ./frontend
     container_name: frontend
     depends_on:
       - backend
