@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Forum</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="auth-container">
+    <button class="btn primary" id="login-btn">Login</button>
+    <button class="btn secondary" id="register-btn">Register</button>
+</div>
+
+<header id="header" class="hidden">
+    <h1>Медицинский форум</h1>
+    <button id="logout-btn" class="btn danger">Logout</button>
+    <button id="create-topic-btn" class="btn primary">Create New Topic</button>
+</header>
+
+<main id="main-content" class="hidden"></main>
+
+<!-- Login Modal -->
+<div id="login-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="login-close">&times;</span>
+        <h2>Login</h2>
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button id="login-submit" class="btn primary">Login</button>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div id="register-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="register-close">&times;</span>
+        <h2>Register</h2>
+        <input type="text" id="register-username" placeholder="Username">
+        <input type="password" id="register-password" placeholder="Password">
+        <button id="register-submit" class="btn primary">Register</button>
+    </div>
+</div>
+
+<!-- Topic Modal -->
+<div id="topic-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="topic-close">&times;</span>
+        <h2>New Topic</h2>
+        <textarea id="topic-title" placeholder="Enter topic title"></textarea>
+        <button id="topic-submit" class="btn primary">Create Topic</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
