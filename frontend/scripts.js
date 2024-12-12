@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Elements
     const loginBtn = document.getElementById('login-btn');
     const registerBtn = document.getElementById('register-btn');
+
     const logoutBtn = document.getElementById('logout-btn');
     const createTopicBtn = document.getElementById('create-topic-btn');
 
@@ -28,7 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loginBtn.addEventListener('click', () => showModal(loginModal));
+    loginModal.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13) {
+            document.getElementById('login-submit').click();
+        }
+    })
+    loginModal.addEventListener('keyup', (event) => {
+        if (event.key === "Escape") {
+            hideModal(loginModal);
+        }
+    })
     registerBtn.addEventListener('click', () => showModal(registerModal));
+    registerModal.addEventListener('keydown', (event) => {
+        if (event.keyCode === 13) {
+            document.getElementById('register-submit').click();
+        }
+    })
+    registerModal.addEventListener('keyup', (event) => {
+        if (event.key === "Escape") {
+            hideModal(registerModal);
+        }
+    })
+
     logoutBtn.addEventListener('click', logout);
 
     modals.forEach(modal => {
@@ -36,32 +58,46 @@ document.addEventListener('DOMContentLoaded', () => {
         closeButton.addEventListener('click', () => hideModal(modal));
     });
 
+
     document.getElementById('login-submit').addEventListener('click', async () => {
         const username = document.getElementById('login-username').value;
         const password = document.getElementById('login-password').value;
         
-        const response = await fetch(`${API_AUTH_URL}login`, {
+        const response = await fetch(`${API_AUTH_URL}login/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ "username": username, "password": password })
         });
-        
+
+        document.getElementById('login-username').value = "";
+        document.getElementById('login-password').value = "";
+
         if (response.ok) {
             hideModal(loginModal);
             authContainer.style.display = 'none';
             header.style.display = 'flex';
         }
+        else alert("Неверное имя или пароль");
     });
 
     document.getElementById('register-submit').addEventListener('click', async () => {
         const username = document.getElementById('register-username').value;
         const password = document.getElementById('register-password').value;
-        
-        await fetch(`${API_AUTH_URL}register`, {
+        if(document.getElementById('register-role-user').checked) {
+            const role = "user";
+        } else if (document.getElementById('register-role-doctor').checked) {
+            const role = "doctor";
+        }
+        const response = await fetch(`${API_AUTH_URL}register/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ "username": username, "password": password, "role": role })
         });
+
+
+        if (response.ok) {
+            alert(555);
+        } else alert(888);
         
         hideModal(registerModal);
     });

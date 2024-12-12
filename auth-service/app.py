@@ -20,13 +20,16 @@ class User(Base):
     username = Column(String, unique=True, index=True, nullable=False)
     password = Column(String, nullable=False)  # Пароль хранится в открытом виде
     role = Column(String, nullable=False)
-    is_active = Column(Boolean, default=True)
 
 # Модель для регистрации (Pydantic)
 class UserCreate(BaseModel):
     username: str
     password: str
     role: str
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
 
 # Получаем сессию базы данных
 def get_db():
@@ -45,15 +48,16 @@ async def root():
 
 # Роут для регистрации нового пользователя
 @app.post('/register/')
-async def register_user(user: UserCreate, db: Session = Depends(get_db)):
+async def register_user(user_register: UserCreate, db: Session = Depends(get_db)):
+    username = user_register.username
     # Проверяем, существует ли уже пользователь с username
-    existing_user = db.query(User).filter((User.username == user.username)).first()
+    existing_user = db.query(User).filter((User.username == username)).first()
     
     if existing_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
+        raise HTTPException(status_code=401, detail="Username already registered")
     
     # Сохраняем нового пользователя в базе данных (пароль сохраняется в открытом виде)
-    new_user = User(username=user.username, password=user.password, role=user.role)
+    new_user = User(username, password=user_register.password, role=user_register.role)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -62,12 +66,22 @@ async def register_user(user: UserCreate, db: Session = Depends(get_db)):
 
 # Роут для логина пользователя
 @app.post('/login/')
-async def login_user(username: str, password: str, db: Session = Depends(get_db)):
+async def login_user(user_login: UserLogin, db: Session = Depends(get_db)):
+    username = user_login.username
+    password = user_login.password
+
     user = db.query(User).filter(User.username == username).first()
     if not user or user.password != password:
         raise HTTPException(status_code=401, detail="Invalid username or password")
     
     return {"message": "Login successful", "user_id": user.id}
+
+
+# try:
+#     db.query(User).first()
+#     print("Database connection successful")
+# except Exception as e:
+#     print(f"Database connection error: {e}")
 
 if __name__ == "__main__":
     import uvicorn

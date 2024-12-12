@@ -17,8 +17,8 @@ CREATE TABLE users (
 -- Добавим несколько пользователей для теста
 INSERT INTO users (username, password, role) 
 VALUES 
-    ('patient1', 'password123', 'user'), 
-    ('doctor1', 'doctorpassword', 'doctor');
+    ('admin', 'admin', 'doctor'), 
+    ('user', 'user', 'user');
 
 -- ===================================
 -- 📜 Таблица для тем форума (backend)

@@ -1,8 +1,9 @@
-fastapi==0.109.0
-uvicorn==0.24.0
-sqlalchemy==2.0.25
-psycopg2-binary==2.9.9
-pydantic==2.6.1
-python-jose==3.3.0
-passlib==1.7.4
-python-multipart==0.0.9
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+
+pydantic
+python-jose
+passlib
+python-multipart

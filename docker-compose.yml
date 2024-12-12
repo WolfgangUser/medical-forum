@@ -46,16 +46,23 @@ services:
     depends_on:
       - backend
       - auth-service
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /usr/share/nginx/html
+      - type: bind
+        source: ./frontend/conf.d
+        target: /etc/nginx/conf.d
     networks:
       - forum_network
 
   nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./public:/usr/share/nginx/html
+      - ./nginx/conf.d/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - frontend
       - backend
