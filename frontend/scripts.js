@@ -176,8 +176,10 @@ document.getElementById('topic-submit').addEventListener('click', async () => {
     });
 
     if (response.ok) {
+        alert('Тема создана!');
         hideModal(topicModal);
     }
+    else alert(555);
 });
 
 function logout() {
