@@ -38,7 +38,6 @@ class Reply(Base):
 class TopicCreate(BaseModel):
     title: str
     content: str
-    author_id: int  # ID автора темы
 
 class ReplyCreate(BaseModel):
     content: str
@@ -65,7 +64,6 @@ def create_topic(topic: TopicCreate, db: Session = Depends(get_db)):
     new_topic = Topic(
         title=topic.title,
         content=topic.content,
-        author_id=topic.author_id
     )
     db.add(new_topic)
     db.commit()

@@ -3,6 +3,7 @@ uvicorn
 sqlalchemy
 pydantic
 python-jose
+psycopg2-binary
 passlib
 python-multipart
 pillow

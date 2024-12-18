@@ -49,15 +49,14 @@ async def root():
 # Роут для регистрации нового пользователя
 @app.post('/register/')
 async def register_user(user_register: UserCreate, db: Session = Depends(get_db)):
-    username = user_register.username
     # Проверяем, существует ли уже пользователь с username
-    existing_user = db.query(User).filter((User.username == username)).first()
+    existing_user = db.query(User).filter((User.username == user_register.username)).first()
     
     if existing_user:
         raise HTTPException(status_code=401, detail="Username already registered")
     
     # Сохраняем нового пользователя в базе данных (пароль сохраняется в открытом виде)
-    new_user = User(username, password=user_register.password, role=user_register.role)
+    new_user = User(username=user_register.username, password=user_register.password, role=user_register.role)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)

@@ -27,9 +27,7 @@ CREATE TABLE topics (
     id SERIAL PRIMARY KEY,               -- Уникальный идентификатор темы
     title VARCHAR(255) NOT NULL,         -- Название темы
     content TEXT NOT NULL,               -- Содержимое темы
-    author_id INTEGER NOT NULL,          -- ID автора темы (ссылка на таблицу users)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Дата создания темы
-    FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE CASCADE -- Внешний ключ для связи с users
 );
 
 -- Добавим несколько тестовых тем

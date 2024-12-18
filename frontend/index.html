@@ -19,7 +19,21 @@
     <button id="create-topic-btn" class="btn primary">Create New Topic</button>
 </header>
 
-<main id="main-content" class="hidden"></main>
+<main id="main-content" class="hidden">
+    <h2>Темы форума</h2>
+    <div id="topics-container" class="topics-container">
+        <div id="topics-grid" class="topics-grid"></div>
+    </div>
+</main>
+
+<!-- Модальное окно для отображения выбранной темы -->
+<div id="topic-details-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="topic-details-close">&times;</span>
+        <h2 id="topic-title"></h2>
+        <p id="topic-content"></p>
+    </div>
+</div>
 
 <!-- Login Modal -->
 <div id="login-modal" class="modal">
@@ -42,9 +56,9 @@
 
         <fieldset>
             <label for="register-role-user">Больной</label>
-            <input type="radio" name="role" value="user" id="register-role-user" checked> 
+            <input type="radio" name="role-input" value="user" id="register-role-user" checked> 
             <label for="register-role-doctor">Врач</label>
-            <input type="radio" name="role" value="doctor" id="register-role-doctor">
+            <input type="radio" name="role-input" value="doctor" id="register-role-doctor">
         </fieldset>
         <button id="register-submit" class="btn primary">Register</button>
 
@@ -57,7 +71,8 @@
     <div class="modal-content">
         <span class="close" id="topic-close">&times;</span>
         <h2>New Topic</h2>
-        <textarea id="topic-title" placeholder="Enter topic title"></textarea>
+        <input id="topic-title" type="text" placeholder="ТЕМА">
+        <textarea id="topic-content" class="topic-modal__textarea" placeholder="ПРОБЛЕМА"></textarea>
         <button id="topic-submit" class="btn primary">Create Topic</button>
     </div>
 </div>

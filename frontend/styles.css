@@ -1,8 +1,23 @@
 body {
   display: flex;
+  flex-direction: column;
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
   margin: 0;
+  overflow: hidden;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  /* background-color: #dc3545; */
+}
+
+* {
+  border: 1px solid #dc3545;
 }
 
 header {
@@ -39,7 +54,12 @@ header {
   margin: 10% auto;
   padding: 20px 30px 20px 20px;
   border-radius: 10px;
-  width: 500px;
+  width: 20%;
+}
+
+.topic-modal__textarea {
+  resize: vertical;
+  width: 40%;
 }
 
 .close {
@@ -79,3 +99,41 @@ input {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
+
+
+/* Сетка для тем форума */
+.topics-container {
+  margin: 20px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #dc3545;
+  /* background-color: #dc3545; */
+}
+
+.topics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.topic-card {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.topic-card:hover {
+  transform: scale(1.05);
+}
+
+.topic-card h3 {
+  margin: 0;
+}
+
+.modal-content p {
+  word-wrap: break-word;
+}
+
