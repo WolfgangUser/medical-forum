@@ -5,6 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Forum</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Модальные окна */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Прозрачный фон */
+            overflow: auto; /* Скроллинг */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-height: 90%; /* Ограничение по высоте */
+            overflow-y: auto; /* Добавляем вертикальную прокрутку */
+        }
+
+        #topic-details-modal {
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .modal textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+            padding: 10px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        /* Стили для отображения ответов */
+        #answers-container {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .answer-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -22,7 +73,12 @@
 <main id="main-content" class="hidden">
     <h2>Темы форума</h2>
     <div id="topics-container" class="topics-container">
-        <div id="topics-grid" class="topics-grid"></div>
+        <div id="topics-grid" class="topics-grid">
+            <!-- Здесь будут динамически добавляться элементы -->
+            <div class="topic-item" data-topic-id="1">Как лечить простуду?</div>
+            <div class="topic-item" data-topic-id="2">Лечение головной боли</div>
+            <div class="topic-item" data-topic-id="3">Рекомендации по питанию</div>
+        </div>
     </div>
 </main>
 
@@ -32,6 +88,13 @@
         <span class="close" id="topic-details-close">&times;</span>
         <h2 id="topic-title"></h2>
         <p id="topic-content"></p>
+        <textarea id="topic-response" placeholder="Введите ваш ответ"></textarea>
+        <button id="submit-response" class="btn primary">Отправить ответ</button>
+
+        <!-- Секция для отображения ответов -->
+        <div id="answers-container">
+            <!-- Ответы будут здесь -->
+        </div>
     </div>
 </div>
 
@@ -61,8 +124,6 @@
             <input type="radio" name="role-input" value="doctor" id="register-role-doctor">
         </fieldset>
         <button id="register-submit" class="btn primary">Register</button>
-
-        
     </div>
 </div>
 
@@ -77,6 +138,81 @@
     </div>
 </div>
 
+<script>
+    // Функция для открытия модального окна с выбранной темой
+    document.querySelectorAll('.topic-item').forEach(item => {
+        item.addEventListener('click', function () {
+            const topicId = this.getAttribute('data-topic-id');
+            let topicTitle, topicContent;
+
+            // Пример данных для каждой темы
+            switch (topicId) {
+                case '1':
+                    topicTitle = "Как лечить простуду?";
+                    topicContent = "Для лечения простуды рекомендуется отдых, обильное питье и использование жаропонижающих средств.";
+                    break;
+                case '2':
+                    topicTitle = "Лечение головной боли";
+                    topicContent = "Для облегчения головной боли можно использовать обезболивающие препараты и попробовать методы релаксации.";
+                    break;
+                case '3':
+                    topicTitle = "Рекомендации по питанию";
+                    topicContent = "Здоровое питание включает разнообразные продукты: овощи, фрукты, белки и углеводы.";
+                    break;
+                default:
+                    topicTitle = "Неизвестная тема";
+                    topicContent = "Нет информации по этой теме.";
+                    break;
+            }
+
+            // Обновляем модальное окно
+            document.getElementById('topic-title').textContent = topicTitle;
+            document.getElementById('topic-content').textContent = topicContent;
+
+            // Очищаем контейнер с ответами
+            document.getElementById('answers-container').innerHTML = '';
+
+            // Пример ответов
+            const exampleAnswers = [
+                "Я использую чай с медом и лимоном, помогает хорошо.",
+                "Рекомендую применять жаропонижающие средства и соблюдать покой.",
+                "Может помочь правильное питание и много воды."
+            ];
+
+            // Добавляем ответы в контейнер
+            exampleAnswers.forEach(answer => {
+                const answerDiv = document.createElement('div');
+                answerDiv.classList.add('answer-item');
+                answerDiv.textContent = answer;
+                document.getElementById('answers-container').appendChild(answerDiv);
+            });
+
+            // Показываем модальное окно
+            document.getElementById('topic-details-modal').style.display = 'block';
+        });
+    });
+
+    // Закрытие модального окна
+    document.getElementById('topic-details-close').addEventListener('click', () => {
+        document.getElementById('topic-details-modal').style.display = 'none';
+    });
+
+    // Обработчик для отправки ответа
+    document.getElementById('submit-response').addEventListener('click', () => {
+        const response = document.getElementById('topic-response').value;
+        if (response.trim() !== '') {
+            const newAnswerDiv = document.createElement('div');
+            newAnswerDiv.classList.add('answer-item');
+            newAnswerDiv.textContent = response;
+
+            // Добавляем новый ответ в контейнер
+            document.getElementById('answers-container').appendChild(newAnswerDiv);
+
+            // Очищаем поле для ввода
+            document.getElementById('topic-response').value = '';
+        }
+    });
+</script>
 <script src="scripts.js"></script>
 </body>
 </html>

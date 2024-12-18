@@ -13,12 +13,11 @@ main {
   margin: 0;
   width: 100%;
   height: 100vh;
-  /* background-color: #dc3545; */
 }
 
-/* * {
-  border: 1px solid #dc3545;
-} */
+* {
+  border: 1px black solid;
+}
 
 header {
   display: none;
@@ -73,9 +72,7 @@ header {
   cursor: pointer;
 }
 
-.btn:hover {
-  border-color: red;
-}
+
 
 .primary {
   background-color: #007bff;
@@ -88,8 +85,12 @@ header {
 }
 
 .danger {
-  background-color: #dc3545;
+  /* background-color: #dc3545; */
   color: white;
+}
+
+.topic-item {
+  height: 300px;
 }
 
 input {
@@ -97,7 +98,7 @@ input {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
+
 }
 
 
@@ -106,8 +107,6 @@ input {
   margin: 20px;
   width: 100%;
   height: 100%;
-  border: 1px solid #dc3545;
-  /* background-color: #dc3545; */
 }
 
 .topics-grid {
